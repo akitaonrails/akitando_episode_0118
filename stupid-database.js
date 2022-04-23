@@ -16,6 +16,6 @@ console.log(count(innerJoin(from('users'), from('heroes'))));
 console.log(count(outerJoin(from('users'), from('heroes'))));
 
 let user_id = insert('users', { name: 'Katar Hol', age: 35, city: 'Thanagar' })
-insert('heroes', { name: 'Hawkman', users_id: user_id })
+insert('heroes', { alterego: 'Hawkman', users_id: user_id })
 
 console.log(select('name,alterego', innerJoin(from('users', { where: 'users.city === "Thanagar"' }), from('heroes'))));
