@@ -1,4 +1,4 @@
-const database = require('./heroes-database.js');
+const database = require('./users-database.js');
 
 const select = (columns, result) => {
     if (Array.isArray(result)) {
@@ -11,14 +11,9 @@ const select = (columns, result) => {
             }
         }))
     } else {
+        // only does .length for now
         Object.keys(result).forEach(key => {
-            try {
-                aggregate = eval(`result[key].${columns}`)
-                if (aggregate) {
-                    result[key] = aggregate
-                }
-            } catch (e) {
-            }
+            result[key] = result[key].length
         })
         return result
     }
@@ -60,9 +55,9 @@ const groupBy = (column, result) => {
 
 
 console.log(select('name', from('users', { where: 'users.name === "Peter Parker"' })));
-console.log(select('name', from('users', { where: 'users.age > 30' && 'users.age < 40'})));
+console.log(select('name', from('users', { where: 'users.age > 30 && users.age < 40'})));
 console.log(select('name', from('users', { where: 'users.city === "Gotham" || users.city === "Metropolis"'})));
 console.log(select('', groupBy('city', from('users'))));
-console.log(select('length', groupBy('city', from('users'))));
+console.log(select('count', groupBy('city', from('users'))));
 console.log(select('name,age', groupBy('city', from('users'))['Coast City']));
 console.log(select('name,age', orderBy('name', 'asc', from('users', { where: 'users.city === "Gotham"' }))));
