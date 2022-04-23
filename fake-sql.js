@@ -75,21 +75,40 @@ const insert = (table, values) => {
 }
 
 const deleteFrom = (table, conditions) => {
+    let counter = 0
     from(table, conditions).forEach(row => {
+        counter ++
         from(table).pop(row)
     })
+    return counter
 }   
 
 const deleteId = (table, id) => {
-    from(table).pop(from(table).find(row => row.id === id))
+    return deleteFrom(table, { where: `${table}.id === ${id}` })
 }
 
 const count = (result) => {
     return result.length
 }
 
+const updateFrom = (table, values, conditions) => {
+    let counter = 0
+    from(table, conditions).forEach(row => {
+        Object.keys(values).forEach(key => {
+            counter ++
+            row[key] = values[key]
+        })
+    })
+    return counter
+}
+
+const updateId = (table, values, id) => {
+    return updateFrom(table, values, { where: `${table}.id === ${id}` })
+}
+
+
 const database = {}
 
 module.exports = [
-    select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,count,database
+    select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,updateFrom,updateId,count,database
 ]
