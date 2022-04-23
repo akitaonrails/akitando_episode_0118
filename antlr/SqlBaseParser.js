@@ -227,7 +227,7 @@ const decisionsToDFA = atn.decisionToState.map( (ds, index) => new antlr4.dfa.DF
 
 const sharedContextCache = new antlr4.PredictionContextCache();
 
-export default class SqlBaseParser extends antlr4.Parser {
+export class SqlBaseParser extends antlr4.Parser {
 
     static grammarFileName = "SqlBase.g4";
     static literalNames = [ null, "','", "'('", "')'", "'.'", "'=>'", "'ALL'", 

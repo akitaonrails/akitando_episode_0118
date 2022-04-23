@@ -5,5 +5,4 @@ See [here](https://github.com/antlr/antlr4/blob/master/doc/javascript-target.md)
 
 
 `npm install antlr4
-npm install -g typescript
-tsc SplitQueries.ts`
+node SplitQueries.js`

@@ -108,7 +108,7 @@ const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
 
 const decisionsToDFA = atn.decisionToState.map( (ds, index) => new antlr4.dfa.DFA(ds, index) );
 
-export default class SqlBaseLexer extends antlr4.Lexer {
+export class SqlBaseLexer extends antlr4.Lexer {
 
     static grammarFileName = "SqlBase.g4";
     static channelNames = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
