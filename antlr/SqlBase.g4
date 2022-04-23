@@ -36,14 +36,6 @@ statement
     | DELETE FROM qualifiedName (WHERE booleanExpression)?             #delete
     ;
 
-query
-    :  with? queryNoWith
-    ;
-
-with
-    : WITH RECURSIVE? namedQuery (',' namedQuery)*
-    ;
-
 tableElement
     : columnDefinition
     | likeClause
@@ -81,7 +73,7 @@ externalRoutineName
     : identifier
     ;
 
-queryNoWith:
+query:
       queryTerm
       (ORDER BY sortItem (',' sortItem)*)?
       (LIMIT limit=(INTEGER_VALUE | ALL))?
@@ -95,7 +87,6 @@ queryPrimary
     : querySpecification                   #queryPrimaryDefault
     | TABLE qualifiedName                  #table
     | VALUES expression (',' expression)*  #inlineTable
-    | '(' queryNoWith  ')'                 #subquery
     ;
 
 sortItem
@@ -104,7 +95,7 @@ sortItem
 
 querySpecification
     : SELECT setQuantifier? selectItem (',' selectItem)*
-      (FROM relation (',' relation)*)?
+      (FROM relationPrimary (',' relationPrimary)*)?
       (WHERE where=booleanExpression)?
       (GROUP BY groupBy)?
     ;
@@ -122,10 +113,6 @@ groupingSet
     | expression
     ;
 
-namedQuery
-    : name=identifier (columnAliases)? AS '(' query ')'
-    ;
-
 setQuantifier
     : DISTINCT
     | ALL
@@ -135,15 +122,6 @@ selectItem
     : expression (AS? identifier)?  #selectSingle
     | qualifiedName '.' ASTERISK    #selectAll
     | ASTERISK                      #selectAll
-    ;
-
-relation
-    : left=relation
-      ( CROSS JOIN right=sampledRelation
-      | joinType JOIN rightRelation=relation joinCriteria
-      | NATURAL joinType JOIN right=sampledRelation
-      )                                           #joinRelation
-    | sampledRelation                             #relationDefault
     ;
 
 joinType
@@ -156,31 +134,12 @@ joinCriteria
     | USING '(' identifier (',' identifier)* ')'
     ;
 
-sampledRelation
-    : aliasedRelation (
-        TABLESAMPLE sampleType '(' percentage=expression ')'
-      )?
-    ;
-
-sampleType
-    : BERNOULLI
-    | SYSTEM
-    ;
-
-aliasedRelation
-    : relationPrimary (AS? identifier columnAliases?)?
-    ;
-
 columnAliases
     : '(' identifier (',' identifier)* ')'
     ;
 
 relationPrimary
     : qualifiedName                                                   #tableName
-    | '(' query ')'                                                   #subqueryRelation
-    | UNNEST '(' expression (',' expression)* ')' (WITH ORDINALITY)?  #unnest
-    | LATERAL '(' query ')'                                           #lateral
-    | '(' relation ')'                                                #parenthesizedRelation
     ;
 
 expression
@@ -190,8 +149,6 @@ expression
 booleanExpression
     : valueExpression predicate[$valueExpression.ctx]?             #predicated
     | NOT booleanExpression                                        #logicalNot
-    | left=booleanExpression operator=AND right=booleanExpression  #logicalBinary
-    | left=booleanExpression operator=OR right=booleanExpression   #logicalBinary
     ;
 
 // workaround for https://github.com/antlr/antlr4/issues/780
@@ -199,19 +156,12 @@ predicate[ParserRuleContext value]
     : comparisonOperator right=valueExpression                            #comparison
     | comparisonOperator comparisonQuantifier '(' query ')'               #quantifiedComparison
     | NOT? BETWEEN lower=valueExpression AND upper=valueExpression        #between
-    | NOT? IN '(' expression (',' expression)* ')'                        #inList
-    | NOT? IN '(' query ')'                                               #inSubquery
-    | NOT? LIKE pattern=valueExpression (ESCAPE escape=valueExpression)?  #like
     | IS NOT? NULL                                                        #nullPredicate
-    | IS NOT? DISTINCT FROM right=valueExpression                         #distinctFrom
     ;
 
 valueExpression
     : primaryExpression                                                                 #valueExpressionDefault
     | operator=(MINUS | PLUS) valueExpression                                           #arithmeticUnary
-    | left=valueExpression operator=(ASTERISK | SLASH | PERCENT) right=valueExpression  #arithmeticBinary
-    | left=valueExpression operator=(PLUS | MINUS) right=valueExpression                #arithmeticBinary
-    | left=valueExpression CONCAT right=valueExpression                                 #concatenation
     ;
 
 primaryExpression
@@ -221,8 +171,6 @@ primaryExpression
     | booleanValue                                                                        #booleanLiteral
     | string                                                                              #stringLiteral
     | identifier                                                                          #columnReference
-    | base=primaryExpression '.' fieldName=identifier                                     #dereference
-    | name=CURRENT_USER                                                                   #currentUser
     ;
 
 string
@@ -258,18 +206,10 @@ baseType
     : qualifiedName
     ;
 
-whenClause
-    : WHEN condition=expression THEN result=expression
-    ;
-
 
 callArgument
     : expression                    #positionalArgument
     | identifier '=>' expression    #namedArgument
-    ;
-
-privilege
-    : SELECT | DELETE | INSERT | identifier
     ;
 
 qualifiedName

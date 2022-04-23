@@ -59,24 +59,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#query.
-	enterQuery(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#query.
-	exitQuery(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#with.
-	enterWith(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#with.
-	exitWith(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#tableElement.
 	enterTableElement(ctx) {
 	}
@@ -158,12 +140,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#queryNoWith.
-	enterQueryNoWith(ctx) {
+	// Enter a parse tree produced by SqlBaseParser#query.
+	enterQuery(ctx) {
 	}
 
-	// Exit a parse tree produced by SqlBaseParser#queryNoWith.
-	exitQueryNoWith(ctx) {
+	// Exit a parse tree produced by SqlBaseParser#query.
+	exitQuery(ctx) {
 	}
 
 
@@ -200,15 +182,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SqlBaseParser#inlineTable.
 	exitInlineTable(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#subquery.
-	enterSubquery(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#subquery.
-	exitSubquery(ctx) {
 	}
 
 
@@ -257,15 +230,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#namedQuery.
-	enterNamedQuery(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#namedQuery.
-	exitNamedQuery(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#setQuantifier.
 	enterSetQuantifier(ctx) {
 	}
@@ -293,24 +257,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#relationDefault.
-	enterRelationDefault(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#relationDefault.
-	exitRelationDefault(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#joinRelation.
-	enterJoinRelation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#joinRelation.
-	exitJoinRelation(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#joinType.
 	enterJoinType(ctx) {
 	}
@@ -326,33 +272,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SqlBaseParser#joinCriteria.
 	exitJoinCriteria(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#sampledRelation.
-	enterSampledRelation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#sampledRelation.
-	exitSampledRelation(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#sampleType.
-	enterSampleType(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#sampleType.
-	exitSampleType(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#aliasedRelation.
-	enterAliasedRelation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#aliasedRelation.
-	exitAliasedRelation(ctx) {
 	}
 
 
@@ -374,57 +293,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#subqueryRelation.
-	enterSubqueryRelation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#subqueryRelation.
-	exitSubqueryRelation(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#unnest.
-	enterUnnest(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#unnest.
-	exitUnnest(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#lateral.
-	enterLateral(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#lateral.
-	exitLateral(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#parenthesizedRelation.
-	enterParenthesizedRelation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#parenthesizedRelation.
-	exitParenthesizedRelation(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#expression.
 	enterExpression(ctx) {
 	}
 
 	// Exit a parse tree produced by SqlBaseParser#expression.
 	exitExpression(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#logicalNot.
-	enterLogicalNot(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#logicalNot.
-	exitLogicalNot(ctx) {
 	}
 
 
@@ -437,12 +311,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#logicalBinary.
-	enterLogicalBinary(ctx) {
+	// Enter a parse tree produced by SqlBaseParser#logicalNot.
+	enterLogicalNot(ctx) {
 	}
 
-	// Exit a parse tree produced by SqlBaseParser#logicalBinary.
-	exitLogicalBinary(ctx) {
+	// Exit a parse tree produced by SqlBaseParser#logicalNot.
+	exitLogicalNot(ctx) {
 	}
 
 
@@ -473,48 +347,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#inList.
-	enterInList(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#inList.
-	exitInList(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#inSubquery.
-	enterInSubquery(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#inSubquery.
-	exitInSubquery(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#like.
-	enterLike(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#like.
-	exitLike(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#nullPredicate.
 	enterNullPredicate(ctx) {
 	}
 
 	// Exit a parse tree produced by SqlBaseParser#nullPredicate.
 	exitNullPredicate(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#distinctFrom.
-	enterDistinctFrom(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#distinctFrom.
-	exitDistinctFrom(ctx) {
 	}
 
 
@@ -527,24 +365,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#concatenation.
-	enterConcatenation(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#concatenation.
-	exitConcatenation(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#arithmeticBinary.
-	enterArithmeticBinary(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#arithmeticBinary.
-	exitArithmeticBinary(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#arithmeticUnary.
 	enterArithmeticUnary(ctx) {
 	}
@@ -554,48 +374,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#dereference.
-	enterDereference(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#dereference.
-	exitDereference(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#columnReference.
-	enterColumnReference(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#columnReference.
-	exitColumnReference(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#currentUser.
-	enterCurrentUser(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#currentUser.
-	exitCurrentUser(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#nullLiteral.
 	enterNullLiteral(ctx) {
 	}
 
 	// Exit a parse tree produced by SqlBaseParser#nullLiteral.
 	exitNullLiteral(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#stringLiteral.
-	enterStringLiteral(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#stringLiteral.
-	exitStringLiteral(ctx) {
 	}
 
 
@@ -623,6 +407,24 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SqlBaseParser#booleanLiteral.
 	exitBooleanLiteral(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SqlBaseParser#stringLiteral.
+	enterStringLiteral(ctx) {
+	}
+
+	// Exit a parse tree produced by SqlBaseParser#stringLiteral.
+	exitStringLiteral(ctx) {
+	}
+
+
+	// Enter a parse tree produced by SqlBaseParser#columnReference.
+	enterColumnReference(ctx) {
+	}
+
+	// Exit a parse tree produced by SqlBaseParser#columnReference.
+	exitColumnReference(ctx) {
 	}
 
 
@@ -707,15 +509,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#whenClause.
-	enterWhenClause(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#whenClause.
-	exitWhenClause(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#positionalArgument.
 	enterPositionalArgument(ctx) {
 	}
@@ -731,15 +524,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SqlBaseParser#namedArgument.
 	exitNamedArgument(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#privilege.
-	enterPrivilege(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#privilege.
-	exitPrivilege(ctx) {
 	}
 
 
