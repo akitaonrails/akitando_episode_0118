@@ -1,5 +1,4 @@
-database = {
-    "users": [
+users = [
         { name: "Peter Parker", age: 25, city: "New York", id: 1 },
         { name: "Clark Kent", age: 35, city: "Metropolis", id: 2 },
         { name: "Bruce Wayne", age: 40, city: "Gotham", id: 3 },
@@ -37,8 +36,6 @@ database = {
         { name: "Talia al Ghul", age: 35, city: "New York", id: 35 },
         { name: "Johnny Storm", age: 33, city: "New York", id: 36 },
         { name: "Jubilation Lee", age: 22, city: "Los Angeles", id: 37 },
-        { name: "Barry Allen", age: 33, city: "Central City", id: 38 },
-    ],
-}
+    ]
 
-module.exports = database;
+module.exports = users;
