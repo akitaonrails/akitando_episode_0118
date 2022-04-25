@@ -26,10 +26,6 @@ standaloneExpression
     : expression EOF
     ;
 
-standaloneRoutineBody
-    : routineBody EOF
-    ;
-
 statement
     : query                                                            #statementDefault
     | INSERT INTO qualifiedName columnAliases? query                   #insertInto
@@ -42,31 +38,15 @@ tableElement
     ;
 
 columnDefinition
-    : identifier type (NOT NULL)? (COMMENT string)? (WITH properties)?
+    : identifier type (NOT NULL)?
     ;
 
 likeClause
-    : LIKE qualifiedName (optionType=(INCLUDING | EXCLUDING) PROPERTIES)?
-    ;
-
-properties
-    : '(' property (',' property)* ')'
-    ;
-
-property
-    : identifier EQ expression
+    : LIKE qualifiedName
     ;
 
 sqlParameterDeclaration
     : identifier type
-    ;
-
-routineBody
-    : returnStatement
-    ;
-
-returnStatement
-    : RETURN expression
     ;
 
 externalRoutineName
@@ -85,12 +65,11 @@ queryTerm
 
 queryPrimary
     : querySpecification                   #queryPrimaryDefault
-    | TABLE qualifiedName                  #table
     | VALUES expression (',' expression)*  #inlineTable
     ;
 
 sortItem
-    : expression ordering=(ASC | DESC)? (NULLS nullOrdering=(FIRST | LAST))?
+    : expression ordering=(ASC | DESC)?
     ;
 
 querySpecification
@@ -101,7 +80,7 @@ querySpecification
     ;
 
 groupBy
-    : setQuantifier? groupingElement (',' groupingElement)*
+    : groupingElement (',' groupingElement)*
     ;
 
 groupingElement
@@ -114,8 +93,7 @@ groupingSet
     ;
 
 setQuantifier
-    : DISTINCT
-    | ALL
+    : ALL
     ;
 
 selectItem
@@ -131,7 +109,6 @@ joinType
 
 joinCriteria
     : ON booleanExpression
-    | USING '(' identifier (',' identifier)* ')'
     ;
 
 columnAliases
@@ -183,7 +160,7 @@ comparisonOperator
     ;
 
 comparisonQuantifier
-    : ALL | SOME | ANY
+    : ALL | ANY
     ;
 
 booleanValue
@@ -241,16 +218,52 @@ nonReserved
     ;
 
 ALL: 'ALL';
+AND: 'AND';
 ANY: 'ANY';
+AS: 'AS';
 ASC: 'ASC';
+BETWEEN: 'BETWEEN';
+BY: 'BY';
+COLUMN: 'COLUMN';
+COLUMNS: 'COLUMNS';
+DATA: 'DATA';
+DATE: 'DATE';
+DAY: 'DAY';
+DELETE: 'DELETE';
 DESC: 'DESC';
+EXISTS: 'EXISTS';
+FALSE: 'FALSE';
+FIRST: 'FIRST';
+FROM: 'FROM';
+GROUP: 'GROUP';
+IN: 'IN';
+INNER: 'INNER';
+INSERT: 'INSERT';
+INTO: 'INTO';
+IS: 'IS';
+JOIN: 'JOIN';
+LEFT: 'LEFT';
+LIKE: 'LIKE';
 LIMIT: 'LIMIT';
 NAME: 'NAME';
+NOT: 'NOT';
+NULL: 'NULL';
+ON: 'ON';
+OR: 'OR';
+ORDER: 'ORDER';
+OUTER: 'OUTER';
+RIGHT: 'RIGHT';
 ROW: 'ROW';
 ROWS: 'ROWS';
+SELECT: 'SELECT';
 SQL: 'SQL';
 TEXT: 'TEXT';
+TO: 'TO';
+TRUE: 'TRUE';
 TYPE: 'TYPE';
+UESCAPE: 'UESCAPE';
+VALUES: 'VALUES';
+WHERE: 'WHERE';
 
 EQ  : '=';
 NEQ : '<>' | '!=';

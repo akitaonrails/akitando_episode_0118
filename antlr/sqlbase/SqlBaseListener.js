@@ -23,15 +23,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#standaloneRoutineBody.
-	enterStandaloneRoutineBody(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#standaloneRoutineBody.
-	exitStandaloneRoutineBody(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#statementDefault.
 	enterStatementDefault(ctx) {
 	}
@@ -86,48 +77,12 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 	}
 
 
-	// Enter a parse tree produced by SqlBaseParser#properties.
-	enterProperties(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#properties.
-	exitProperties(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#property.
-	enterProperty(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#property.
-	exitProperty(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SqlBaseParser#sqlParameterDeclaration.
 	enterSqlParameterDeclaration(ctx) {
 	}
 
 	// Exit a parse tree produced by SqlBaseParser#sqlParameterDeclaration.
 	exitSqlParameterDeclaration(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#routineBody.
-	enterRoutineBody(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#routineBody.
-	exitRoutineBody(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#returnStatement.
-	enterReturnStatement(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#returnStatement.
-	exitReturnStatement(ctx) {
 	}
 
 
@@ -164,15 +119,6 @@ export default class SqlBaseListener extends antlr4.tree.ParseTreeListener {
 
 	// Exit a parse tree produced by SqlBaseParser#queryPrimaryDefault.
 	exitQueryPrimaryDefault(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SqlBaseParser#table.
-	enterTable(ctx) {
-	}
-
-	// Exit a parse tree produced by SqlBaseParser#table.
-	exitTable(ctx) {
 	}
 
 

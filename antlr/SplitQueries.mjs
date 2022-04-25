@@ -4,7 +4,7 @@ import {SqlBaseLexer} from "./SqlBaseLexer.js";
 import {SqlBaseParser} from "./SqlBaseParser.js";
 import {CustomListener} from "./CustomListener.js";
 export var SplitQueries = function () {
-    var input = "SELECT name, age FROM users WHERE age > 20 AND city = 'Gotham'";
+    var input = "SELECT * FROM users WHERE age > 20 AND city = 'Gotham'";
     var chars = new antlr4.InputStream(input);
     var lexer = new SqlBaseLexer(chars);
     var tokens = new antlr4.CommonTokenStream(lexer);
