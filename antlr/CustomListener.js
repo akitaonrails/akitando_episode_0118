@@ -1,6 +1,6 @@
-import SqlBaseListener from './SqlBaseListener.js'
+import SQLiteParserListener from './SQLiteParserListener.js'
 
-export class CustomListener extends SqlBaseListener {
+export class CustomListener extends SQLiteParserListener {
   constructor(result) {
     super();
     this.result = result;
