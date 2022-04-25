@@ -4,7 +4,9 @@ import {SQLiteLexer} from "./SQLiteLexer.js";
 import {SQLiteParser} from "./SQLiteParser.js";
 import {CustomListener} from "./CustomListener.js";
 export var SplitQueries = function () {
-    var input = "SELECT * FROM users WHERE age > 20 AND city = 'Gotham'";
+    var input = `
+SELECT name, age FROM users WHERE NOT age IS NULL AND city = 'Gotham'
+`;
     var chars = new antlr4.InputStream(input);
     var lexer = new SQLiteLexer(chars);
     var tokens = new antlr4.CommonTokenStream(lexer);
@@ -16,4 +18,4 @@ export var SplitQueries = function () {
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, tree);
     return listener.result; // this function returns the start and stop indices.
 };
-SplitQueries();
+console.log(SplitQueries());

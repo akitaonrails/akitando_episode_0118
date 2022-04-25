@@ -32,102 +32,12 @@ export default class SQLiteParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by SQLiteParser#alter_table_stmt.
-	enterAlter_table_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#alter_table_stmt.
-	exitAlter_table_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#analyze_stmt.
-	enterAnalyze_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#analyze_stmt.
-	exitAnalyze_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#attach_stmt.
-	enterAttach_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#attach_stmt.
-	exitAttach_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#begin_stmt.
-	enterBegin_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#begin_stmt.
-	exitBegin_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#commit_stmt.
-	enterCommit_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#commit_stmt.
-	exitCommit_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#rollback_stmt.
-	enterRollback_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#rollback_stmt.
-	exitRollback_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#savepoint_stmt.
-	enterSavepoint_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#savepoint_stmt.
-	exitSavepoint_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#release_stmt.
-	enterRelease_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#release_stmt.
-	exitRelease_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#create_index_stmt.
-	enterCreate_index_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#create_index_stmt.
-	exitCreate_index_stmt(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLiteParser#indexed_column.
 	enterIndexed_column(ctx) {
 	}
 
 	// Exit a parse tree produced by SQLiteParser#indexed_column.
 	exitIndexed_column(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#create_table_stmt.
-	enterCreate_table_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#create_table_stmt.
-	exitCreate_table_stmt(ctx) {
 	}
 
 
@@ -194,33 +104,6 @@ export default class SQLiteParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by SQLiteParser#create_trigger_stmt.
-	enterCreate_trigger_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#create_trigger_stmt.
-	exitCreate_trigger_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#create_view_stmt.
-	enterCreate_view_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#create_view_stmt.
-	exitCreate_view_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#create_virtual_table_stmt.
-	enterCreate_virtual_table_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#create_virtual_table_stmt.
-	exitCreate_virtual_table_stmt(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLiteParser#with_clause.
 	enterWith_clause(ctx) {
 	}
@@ -263,33 +146,6 @@ export default class SQLiteParserListener extends antlr4.tree.ParseTreeListener 
 
 	// Exit a parse tree produced by SQLiteParser#delete_stmt.
 	exitDelete_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#delete_stmt_limited.
-	enterDelete_stmt_limited(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#delete_stmt_limited.
-	exitDelete_stmt_limited(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#detach_stmt.
-	enterDetach_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#detach_stmt.
-	exitDetach_stmt(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#drop_stmt.
-	enterDrop_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#drop_stmt.
-	exitDrop_stmt(ctx) {
 	}
 
 
@@ -338,30 +194,12 @@ export default class SQLiteParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by SQLiteParser#pragma_stmt.
-	enterPragma_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#pragma_stmt.
-	exitPragma_stmt(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLiteParser#pragma_value.
 	enterPragma_value(ctx) {
 	}
 
 	// Exit a parse tree produced by SQLiteParser#pragma_value.
 	exitPragma_value(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#reindex_stmt.
-	enterReindex_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#reindex_stmt.
-	exitReindex_stmt(ctx) {
 	}
 
 
@@ -482,30 +320,12 @@ export default class SQLiteParserListener extends antlr4.tree.ParseTreeListener 
 	}
 
 
-	// Enter a parse tree produced by SQLiteParser#update_stmt_limited.
-	enterUpdate_stmt_limited(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#update_stmt_limited.
-	exitUpdate_stmt_limited(ctx) {
-	}
-
-
 	// Enter a parse tree produced by SQLiteParser#qualified_table_name.
 	enterQualified_table_name(ctx) {
 	}
 
 	// Exit a parse tree produced by SQLiteParser#qualified_table_name.
 	exitQualified_table_name(ctx) {
-	}
-
-
-	// Enter a parse tree produced by SQLiteParser#vacuum_stmt.
-	enterVacuum_stmt(ctx) {
-	}
-
-	// Exit a parse tree produced by SQLiteParser#vacuum_stmt.
-	exitVacuum_stmt(ctx) {
 	}
 
 
