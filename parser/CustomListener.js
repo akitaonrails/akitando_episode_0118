@@ -232,8 +232,15 @@ export class CustomListener extends SQLiteParserListener {
 		if(child.constructor.name === 'ExprContext') {
 			this.enterExpr_recursiveChildren(child.children)
 		} else {
-			return child.getText()
+			return this.escape(child.getText())
 		}
+	}
+
+	escape(str) {
+		return str.replace(/\\/g, "\\\\")
+			.replace(/\$/g, "\\$")
+			.replace(/'/g, "\\'")
+			.replace(/"/g, "\\\"");
 	}
 
 	enterExpr_recursiveChildren(children) {
@@ -242,10 +249,10 @@ export class CustomListener extends SQLiteParserListener {
 		children.forEach(child => {
 			switch (child.constructor.name) {
 			case 'Table_nameContext':
-				custom_column.push(child.getText())
+				custom_column.push(this.escape(child.getText()))
 				break;
 			case 'Column_nameContext':
-				custom_column.push(child.getText())
+				custom_column.push(this.escape(child.getText()))
 				this.sqlStruct.conditions.push(custom_column.join(''))
 				custom_column = []
 				break;
@@ -416,7 +423,7 @@ export class CustomListener extends SQLiteParserListener {
 		if(this.sqlStruct.table) {
 			sql.push(", from('" + this.sqlStruct.table.join(","))
 			if(this.sqlStruct.conditions.length > 0) {
-				sql.push(`', { where: "${this.sqlStruct.conditions.join(' ')}"})`);
+				sql.push(`', { where: "${this.sqlStruct.conditions.join(' ')}"}`);
 			} else {
 				sql.push("'");
 			}
@@ -433,14 +440,10 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#join_clause.
 	enterJoin_clause(ctx) {
-		console.log("enterJoin_clause");
-		this.result.push("innerJoin(");
 	}
 
 	// Exit a parse tree produced by SQLiteParser#join_clause.
 	exitJoin_clause(ctx) {
-		console.log("exitJoin_clause");
-		this.result.push(")");
 	}
 
 
@@ -495,7 +498,7 @@ export class CustomListener extends SQLiteParserListener {
 	// Enter a parse tree produced by SQLiteParser#result_column.
 	enterResult_column(ctx) {
 		if(this.sqlStruct) {
-			this.sqlStruct.columns.push(ctx.getText());
+			this.sqlStruct.columns.push(this.escape(ctx.getText()));
 		}
 	}
 
