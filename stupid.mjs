@@ -28,5 +28,5 @@ const parsed = parseScriptWithSplitQueries(script);
 parsed.forEach(query => {
     console.log(`running: ${query}`);
     const result = eval(query);
-    console.log(result);
+    console.table(result);
 })
