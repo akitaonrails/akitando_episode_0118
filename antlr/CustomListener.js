@@ -160,10 +160,32 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#delete_stmt.
 	enterDelete_stmt(ctx) {
+		this.sqlStruct = this.buildSqlStruct('delete')
+		ctx.children.forEach(child => {
+			switch(child.constructor.name) {
+				case 'Qualified_table_nameContext':
+					this.sqlStruct.table = child.getText()
+					break;
+				case 'ExprContext':
+					this.enterExpr_recursiveChildren(child.children)
+					break;
+				}
+			})
 	}
 
 	// Exit a parse tree produced by SQLiteParser#delete_stmt.
 	exitDelete_stmt(ctx) {
+		if(this.sqlStruct && this.sqlStruct.command === 'delete') {
+			var sql = []
+			sql.push(`deleteId('${this.sqlStruct.table}', `);
+			// this is sloppy, but I didn't implement a full DELETE in the stupid database
+			if(this.sqlStruct.conditions && this.sqlStruct.conditions.length > 0) {
+				sql.push(this.sqlStruct.conditions.pop());
+			}
+			sql.push(`)`);
+			this.result.push(sql.join(''))
+			this.sqlStruct = null;
+		}
 	}
 
 	enterExpr_invertOp(op) {
@@ -520,10 +542,51 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#update_stmt.
 	enterUpdate_stmt(ctx) {
+		this.sqlStruct = this.buildSqlStruct('update')
+		var lastTerminal = null
+		ctx.children.forEach(child => {
+			switch(child.constructor.name) {
+				case 'Qualified_table_nameContext':
+					this.sqlStruct.table = child.getText()
+					break;
+				case 'Column_nameContext':
+					this.sqlStruct.columns.push(child.getText())
+					break;
+				case 'TerminalNodeImpl':
+					if(child.getText() === '=')	{
+						lastTerminal = true
+					}
+					break;
+				case 'ExprContext':
+					if(lastTerminal) {
+						this.sqlStruct.values.push(child.getText())
+						lastTerminal = false
+					} else {
+						this.enterExpr_recursiveChildren(child.children)
+					}
+					break;
+				}
+			})
 	}
 
 	// Exit a parse tree produced by SQLiteParser#update_stmt.
 	exitUpdate_stmt(ctx) {
+		if(this.sqlStruct && this.sqlStruct.command === 'update') {
+			var sql = []
+			sql.push(`updateFrom('${this.sqlStruct.table}', {`);
+			var values = []
+			this.sqlStruct.columns.forEach((column, index) => {
+				values.push(`${column}: ${this.sqlStruct.values[index]}`)
+			})
+			sql.push(`${values.join(',')}}`);
+			if(this.sqlStruct.conditions && this.sqlStruct.conditions.length > 0) {
+				sql.push(`, { where: "${this.sqlStruct.conditions.join(' ')}"})`);
+			} else {
+				sql.push(`)`);
+			}
+			this.result.push(sql.join(''))
+			this.sqlStruct = null;
+		}
 	}
 
 
