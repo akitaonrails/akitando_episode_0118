@@ -1,7 +1,7 @@
 import {select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,
-    updateFrom,updateId,count,database} from './fake-sql.mjs';
-import {users} from './users-database.mjs';
-import {heroes} from './heroes-database.mjs';
+    updateFrom,updateId,count,database} from './lib/fake-sql.mjs';
+import {users} from './lib/users-database.mjs';
+import {heroes} from './lib/heroes-database.mjs';
 database['users'] = users
 database['heroes'] = heroes
 

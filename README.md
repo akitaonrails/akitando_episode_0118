@@ -18,6 +18,16 @@ You can run the example with:
 
 `node stupid-test.mjs`
 
+### REPL
+
+You can open an interactive REPL to run SQL command directly by running:
+
+`./repl.js`
+
+It's a node REPL and you can send SQL commands like this:
+
+`stupid sql > p("select name from users where users.city = 'Gotham'")`
+
 ### ANTLR4
 
 Just out of fun, I did a very small and very naive implementation of a SQL parser using Antlr4.
