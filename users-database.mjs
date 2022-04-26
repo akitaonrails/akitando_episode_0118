@@ -1,4 +1,4 @@
-users = [
+export var users = [
         { name: "Peter Parker", age: 25, city: "New York", id: 1 },
         { name: "Clark Kent", age: 35, city: "Metropolis", id: 2 },
         { name: "Bruce Wayne", age: 40, city: "Gotham", id: 3 },
@@ -37,5 +37,3 @@ users = [
         { name: "Johnny Storm", age: 33, city: "New York", id: 36 },
         { name: "Jubilation Lee", age: 22, city: "Los Angeles", id: 37 },
     ]
-
-module.exports = users;

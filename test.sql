@@ -1,0 +1,1 @@
+SELECT name,age FROM users where age > 30 AND city = "Gotham";

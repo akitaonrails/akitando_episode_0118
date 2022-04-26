@@ -1,7 +1,9 @@
-const [select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,
-    updateFrom,updateId,count,database] = require('./fake-sql.js')
-database['users'] = require('./users-database.js')
-database['heroes'] = require('./heroes-database.js')
+import {select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,
+    updateFrom,updateId,count,database} from './fake-sql.mjs';
+import {users} from './users-database.mjs';
+import {heroes} from './heroes-database.mjs';
+database['users'] = users
+database['heroes'] = heroes
 
 console.log(select('name', from('users', { where: 'users.name === "Peter Parker"' })))
 console.log(select('name', from('users', { where: 'users.age > 30 && users.age < 40'})))

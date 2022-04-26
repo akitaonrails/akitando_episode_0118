@@ -506,37 +506,28 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#join_operator.
 	enterJoin_operator(ctx) {
-		console.log("enterJoin_operator");
-		console.log(ctx.getText());
 	}
 
 	// Exit a parse tree produced by SQLiteParser#join_operator.
 	exitJoin_operator(ctx) {
-    	console.log("exitJoin_operator");	
 	}
 
 
 	// Enter a parse tree produced by SQLiteParser#join_constraint.
 	enterJoin_constraint(ctx) {
-		console.log("enterJoin_constraint");
-		console.log(ctx.getText());
   }
 
 	// Exit a parse tree produced by SQLiteParser#join_constraint.
 	exitJoin_constraint(ctx) {
-		console.log("exitJoin_constraint");
 	}
 
 
 	// Enter a parse tree produced by SQLiteParser#compound_operator.
 	enterCompound_operator(ctx) {
-		console.log("enterCompound_operator");
-		console.log(ctx.getText());
 	}
 
 	// Exit a parse tree produced by SQLiteParser#compound_operator.
 	exitCompound_operator(ctx) {
-		console.log("exitCompound_operator");
 	}
 
 
@@ -719,7 +710,6 @@ export class CustomListener extends SQLiteParserListener {
 			}
 		})
 		var lastElem = this.sqlStruct.orderby[this.sqlStruct.orderby.length - 1];
-		console.log(lastElem)
 		if(lastElem !== 'ASC' && lastElem !== 'DESC') {
 			this.sqlStruct.orderby.push('ASC')
 		}

@@ -1,4 +1,4 @@
-heroes = [
+export var heroes = [
         { id: 1, alterego: "Green Lantern", users_id: 24 },
         { id: 2, alterego: "Mr. Fantastic", users_id: 34 },
         { id: 3, alterego: "Captain America", users_id: 6 },
@@ -27,5 +27,3 @@ heroes = [
         { id: 26, alterego: "Cyclops", users_id: 19 },
         { id: 27, alterego: "Superman", users_id: 2 },
     ]
-
-module.exports = heroes;
