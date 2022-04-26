@@ -5,8 +5,7 @@ import {SQLiteParser} from "./SQLiteParser.js";
 import {CustomListener} from "./CustomListener.js";
 export var SplitQueries = function () {
     var input = `
-SELECT name, age FROM users WHERE NOT age IS NULL AND city = 'Gotham'
-`;
+INSERT INTO users (name, age, city) VALUES ("Katar Hol", 35, "Thanagar");`;
     var chars = new antlr4.InputStream(input);
     var lexer = new SQLiteLexer(chars);
     var tokens = new antlr4.CommonTokenStream(lexer);
@@ -19,3 +18,4 @@ SELECT name, age FROM users WHERE NOT age IS NULL AND city = 'Gotham'
     return listener.result; // this function returns the start and stop indices.
 };
 console.log(SplitQueries());
+
