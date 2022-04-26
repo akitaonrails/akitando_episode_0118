@@ -5,7 +5,8 @@ import {SQLiteParser} from "./SQLiteParser.js";
 import {CustomListener} from "./CustomListener.js";
 export var SplitQueries = function () {
     var input = `
-INSERT INTO users (name, age, city) VALUES ("Katar Hol", 35, "Thanagar");`;
+INSERT INTO users (name, age, city) VALUES ("Katar Hol", 35, "Thanagar");
+SELECT name FROM users WHERE users.age = 35;`;
     var chars = new antlr4.InputStream(input);
     var lexer = new SQLiteLexer(chars);
     var tokens = new antlr4.CommonTokenStream(lexer);

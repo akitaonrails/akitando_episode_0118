@@ -6,12 +6,14 @@ export class CustomListener extends SQLiteParserListener {
   constructor(result) {
     super();
     this.result = result;
-    this.selectStruct = null;
+    this.sqlStruct = null;
   }
 
-  buildSelect() {
+  buildSqlStruct(command) {
     return {
+	  command: command,
       columns: [],
+	  values: [],
       table: [],
       conditions: [],
 	  range: null,
@@ -165,10 +167,10 @@ export class CustomListener extends SQLiteParserListener {
 	}
 
 	enterExpr_invertOp(op) {
-		if(!this.selectStruct.not)
+		if(!this.sqlStruct.not)
 			return op;
 		if (op !== '.')
-			this.selectStruct.not = false;
+			this.sqlStruct.not = false;
 		switch(op) {
 			case '=':
 				return '!=';
@@ -222,51 +224,51 @@ export class CustomListener extends SQLiteParserListener {
 				break;
 			case 'Column_nameContext':
 				custom_column.push(child.getText())
-				this.selectStruct.conditions.push(custom_column.join(''))
+				this.sqlStruct.conditions.push(custom_column.join(''))
 				custom_column = []
 				break;
 			case 'TerminalNodeImpl':
 				var terminal = this.enterExpr_terminalNode(child)
 				if (custom_column.length === 0) {
-					if(this.selectStruct.range) {
-						this.selectStruct.range.push(terminal)
+					if(this.sqlStruct.range) {
+						this.sqlStruct.range.push(terminal)
 					} else {
-						this.selectStruct.conditions.push(terminal)
+						this.sqlStruct.conditions.push(terminal)
 					}
 				} else {
 					custom_column.push(terminal)
 				}
 				if (terminal === 'IN' || terminal === 'NOT IN') {
-					this.selectStruct.range = []
+					this.sqlStruct.range = []
 				}
-				if (terminal === ')' && this.selectStruct.range) {
-					var op = this.selectStruct.conditions.pop()
-					var name = this.selectStruct.conditions.pop()
+				if (terminal === ')' && this.sqlStruct.range) {
+					var op = this.sqlStruct.conditions.pop()
+					var name = this.sqlStruct.conditions.pop()
 					if(name === 'NOT') {
-						name = this.selectStruct.conditions.pop()
+						name = this.sqlStruct.conditions.pop()
 						op = 'NOT IN'
 					}
-					this.selectStruct.range.shift(); this.selectStruct.range.pop() // remove parenthesis
-					var command = `[${this.selectStruct.range.join('')}].includes(${name})`
+					this.sqlStruct.range.shift(); this.sqlStruct.range.pop() // remove parenthesis
+					var command = `[${this.sqlStruct.range.join('')}].includes(${name})`
 					if (op === 'NOT IN') {
 						command = `!(${command})`
 					}
-					this.selectStruct.conditions.push(command)
-					this.selectStruct.range = null
+					this.sqlStruct.conditions.push(command)
+					this.sqlStruct.range = null
 				}
 				break;
 			case 'Unary_operatorContext':
 				if(child.getText() === 'NOT') {
-					this.selectStruct.not = true;
+					this.sqlStruct.not = true;
 				}
 				break;
 			default:
 				var expr = this.enterExpr_exprContext(child);
 				if(expr) {
-					if(this.selectStruct.range) {
-						this.selectStruct.range.push(expr)
+					if(this.sqlStruct.range) {
+						this.sqlStruct.range.push(expr)
 					} else {
-						this.selectStruct.conditions.push(expr)
+						this.sqlStruct.conditions.push(expr)
 					}
 				}
 				break;
@@ -276,7 +278,8 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#expr.
 	enterExpr(ctx) {
-		if(this.selectStruct && this.selectStruct.conditions.length == 0 && ctx.children.length > 2) {
+		if(this.sqlStruct && 
+			this.sqlStruct.conditions.length == 0 && ctx.children.length > 2) {
 			this.enterExpr_recursiveChildren(ctx.children)
 		}
 	}
@@ -306,10 +309,36 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#insert_stmt.
 	enterInsert_stmt(ctx) {
+		this.sqlStruct = this.buildSqlStruct('insert');
+		ctx.children.forEach(child => {
+			switch(child.constructor.name) {
+				case 'Table_nameContext':
+					this.sqlStruct.table = child.getText()
+					break;
+				case 'TerminalNodeImpl':
+					break;
+				case 'Column_nameContext':
+					this.sqlStruct.columns.push(child.getText())
+					break;
+				case 'ExprContext':
+					this.sqlStruct.values.push(child.getText())
+					break;
+				default:
+					break;
+			}
+		})
 	}
 
 	// Exit a parse tree produced by SQLiteParser#insert_stmt.
 	exitInsert_stmt(ctx) {
+		if(this.sqlStruct && this.sqlStruct.command === 'insert') {
+			var values = []
+			this.sqlStruct.columns.forEach(column => {
+				values.push(`${column}: ${this.sqlStruct.values.shift()}`)
+			})
+			this.result.push(`insert('${this.sqlStruct.table}', {${values.join(', ')}})`)
+			this.sqlStruct = null
+		}
 	}
 
 
@@ -351,32 +380,32 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#select_stmt.
 	enterSelect_stmt(ctx) {
-    this.selectStruct = this.buildSelect();
+		this.sqlStruct = this.buildSqlStruct('select');
 	}
 
 	// Exit a parse tree produced by SQLiteParser#select_stmt.
 	exitSelect_stmt(ctx) {
-    if (this.selectStruct) {
-      var sql = [];
-	  if(this.selectStruct.orderby) {
-		  var order = this.selectStruct.orderby.pop()
-		  sql.push(`, orderBy('${this.selectStruct.orderby.join(",")}', '${order.toLowerCase()}' `)
-	  }
-      if(this.selectStruct.table) {
-        sql.push(", from('" + this.selectStruct.table.join(","))
-        if(this.selectStruct.conditions.length > 0) {
-        	sql.push(`', { where: "${this.selectStruct.conditions.join(' ')}"})`);
-        } else {
-			sql.push("'");
+		if (this.sqlStruct) {
+		var sql = [];
+		if(this.sqlStruct.orderby) {
+			var order = this.sqlStruct.orderby.pop()
+			sql.push(`, orderBy('${this.sqlStruct.orderby.join(",")}', '${order.toLowerCase()}' `)
 		}
-        sql.push(")");
-      }
-	  if(this.selectStruct.orderby) {
-		  sql.push(")")
-	  }
-      this.result.push(`select('${this.selectStruct.columns.join(",")}'${sql.join('')})`);
-      this.selectStruct = null;
-    }
+		if(this.sqlStruct.table) {
+			sql.push(", from('" + this.sqlStruct.table.join(","))
+			if(this.sqlStruct.conditions.length > 0) {
+				sql.push(`', { where: "${this.sqlStruct.conditions.join(' ')}"})`);
+			} else {
+				sql.push("'");
+			}
+			sql.push(")");
+		}
+		if(this.sqlStruct.orderby) {
+			sql.push(")")
+		}
+		this.result.push(`select('${this.sqlStruct.columns.join(",")}'${sql.join('')})`);
+		this.sqlStruct = null;
+		}
 	}
 
 
@@ -431,8 +460,8 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#table_or_subquery.
 	enterTable_or_subquery(ctx) {
-		if(this.selectStruct) {
-			this.selectStruct.table.push(ctx.getText())
+		if(this.sqlStruct) {
+			this.sqlStruct.table.push(ctx.getText())
 		}
 	}
 
@@ -443,8 +472,8 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#result_column.
 	enterResult_column(ctx) {
-		if(this.selectStruct) {
-			this.selectStruct.columns.push(ctx.getText());
+		if(this.sqlStruct) {
+			this.sqlStruct.columns.push(ctx.getText());
 		}
 	}
 
@@ -608,36 +637,33 @@ export class CustomListener extends SQLiteParserListener {
 
 	// Enter a parse tree produced by SQLiteParser#common_table_stmt.
 	enterCommon_table_stmt(ctx) {
-		console.log("enterCommon_table_stmt");
 		console.log(ctx.getText());
 	}
 
 	// Exit a parse tree produced by SQLiteParser#common_table_stmt.
 	exitCommon_table_stmt(ctx) {
-		console.log("exitCommon_table_stmt");
 	}
 
 
 	// Enter a parse tree produced by SQLiteParser#order_by_stmt.
 	enterOrder_by_stmt(ctx) {
-		this.selectStruct.orderby = []
+		this.sqlStruct.orderby = []
 		ctx.children.forEach(child => {
 			if(child.constructor.name === 'Ordering_termContext') {
 				child.children.forEach(child => {
-					this.selectStruct.orderby.push(child.getText());
+					this.sqlStruct.orderby.push(child.getText());
 				})
 			}
 		})
-		var lastElem = this.selectStruct.orderby[this.selectStruct.orderby.length - 1];
+		var lastElem = this.sqlStruct.orderby[this.sqlStruct.orderby.length - 1];
 		console.log(lastElem)
 		if(lastElem !== 'ASC' && lastElem !== 'DESC') {
-			this.selectStruct.orderby.push('ASC')
+			this.sqlStruct.orderby.push('ASC')
 		}
 	}
 
 	// Exit a parse tree produced by SQLiteParser#order_by_stmt.
 	exitOrder_by_stmt(ctx) {
-		console.log("exitOrder_by_stmt");
 	}
 
 
