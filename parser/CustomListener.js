@@ -212,7 +212,7 @@ export class CustomListener extends SQLiteParserListener {
 	}
 
 	enterExpr_terminalNode(child) {
-		var op = this.enterExpr_invertOp(child.getText());
+		var op = this.enterExpr_invertOp(child.getText().toUpperCase());
 
 		switch(op) {
 			case '=': case 'IS':
