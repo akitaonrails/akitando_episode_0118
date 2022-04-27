@@ -59,7 +59,7 @@ node bench_index.mjs
 
 Just out of fun, I did a very small and very naive implementation of a SQL parser using Antlr4.
 
-You can run very basic SQL agains the stupid database. Just add the commands in the `test.sql` file and run doing:
+You can run very basic SQL against the stupid database. Just add the commands in the `test.sql` file and run doing:
 
 `node stupid.mjs`
 
