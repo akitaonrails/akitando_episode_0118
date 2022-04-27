@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,
     updateFrom,updateId,count,database} from './lib/fake-sql.mjs';
 import {createIndex,insertIndex,removeIndex,getRangeIndex,getFromIndex,

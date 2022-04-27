@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import Net from 'net'
 import promptSync from 'prompt-sync'
 

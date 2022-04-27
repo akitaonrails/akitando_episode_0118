@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Include Nodejs' net module.
 import Net from 'net'
 import {SplitQueries} from './parser/SplitQueries.mjs';

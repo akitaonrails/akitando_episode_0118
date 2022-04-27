@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import * as fs from 'fs';
 import {SplitQueries} from './parser/SplitQueries.mjs';
 import {select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,

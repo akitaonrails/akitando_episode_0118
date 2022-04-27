@@ -1,8 +1,16 @@
 {
     "type": "module",
+    "main": "repl.mjs",
+    "scripts": {
+        "start": "node repl.mjs",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    },
     "dependencies": {
         "antlr4": "^4.10.1",
         "avl": "^1.5.3",
         "prompt-sync": "^4.2.0"
+    },
+    "devDependencies": {
+        "jest": "^28.0.2"
     }
 }

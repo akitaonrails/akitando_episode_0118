@@ -16,7 +16,7 @@ And the idea is to have a "mental model" of what SQL means in a more general pro
 
 You can run the example with:
 
-`node stupid-test.mjs`
+`node test`
 
 ### REPL
 
@@ -26,7 +26,7 @@ You can open an interactive REPL to run SQL command directly by running:
 
 It's a node REPL and you can send SQL commands like this:
 
-`stupid sql > p("select name from users where users.city = 'Gotham'")`
+`stupid sql > select name from users where users.city = 'Gotham'`
 
 
 ### Client/Server
@@ -34,11 +34,11 @@ It's a node REPL and you can send SQL commands like this:
 There is also a demonstration of the most minimal bare-bones "SQL-like"
 database. You can start this server at port 4000:
 
-`node stupid-server.mjs`
+`./stupid-server.mjs`
 
 And connect to it with this client:
 
-`node stupid-client.mjs`
+`./stupid-client.mjs`
 
 It will open an interactive prompt so you can send the SQL commands
 
@@ -52,7 +52,7 @@ We can compare the times for the equivalente of a 'table scan' filtering
 every single element in the table or using the index.
 
 `
-node bench_index.mjs
+./bench_index.mjs
 `
 
 ### ANTLR4
@@ -61,7 +61,7 @@ Just out of fun, I did a very small and very naive implementation of a SQL parse
 
 You can run very basic SQL against the stupid database. Just add the commands in the `test.sql` file and run doing:
 
-`node stupid.mjs`
+`./stupid.mjs`
 
 The parser is a stripped down version copied from the SQLite3 parser.
 
