@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import * as repl from 'repl';
+import promptSync from 'prompt-sync'
 import {SplitQueries} from './parser/SplitQueries.mjs';
 import {select,from,outerJoin,innerJoin,orderBy,groupBy,insert,deleteFrom,deleteId,
     updateFrom,updateId,count,database} from './lib/fake-sql.mjs';
@@ -8,17 +8,18 @@ import {heroes} from './lib/heroes-database.mjs';
 database['users'] = users
 database['heroes'] = heroes
 
-const state = {
-  p(sql) {
-    const result = SplitQueries(sql);
-    result.forEach(query => {
-      console.log(`running: ${query}`);
-      const result = eval(query);
-      console.table(result);
-    })
-  }
-};
+const parseScriptWithSplitQueries = (script) => {
+  const result = SplitQueries(script);
+  result.forEach(query => {
+    console.log(`running: ${query}`);
+    const result = eval(query);
+    console.table(result);
+  })
+  const query = prompt('stupid query > ')
+  parseScriptWithSplitQueries(query)
+}
 
-const myRepl = repl.start("stupid sql > ");
-
-Object.assign(myRepl.context, state);
+console.log("Welcome to Stupid Client! Type Ctrl+C to exit.");
+const prompt = promptSync({sigint: true});
+const query = prompt('stupid query > ')
+parseScriptWithSplitQueries(query)

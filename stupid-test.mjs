@@ -8,7 +8,7 @@ database['heroes'] = heroes
 console.table(select('name', from('users', { where: 'users.name === "Peter Parker"' })))
 console.table(select('name', from('users', { where: 'users.age > 30 && users.age < 40'})))
 console.table(select('name', from('users', { where: 'users.city === "Gotham" || users.city === "Metropolis"'})))
-console.table(select('count', groupBy('city', from('users'))))
+console.table(select('count', from('users', { where: 'users.city === "Wakanda"' })))
 console.table(select('name,age', groupBy('city', from('users'))['Coast City']))
 console.table(select('name,age', orderBy('name', 'asc', from('users', { where: 'users.city === "Gotham"' }))));
 
