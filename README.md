@@ -55,6 +55,22 @@ every single element in the table or using the index.
 ./bench_index.mjs
 `
 
+Spoilers: on my i9-9900K, with NVME, running inside WSL2, this is the result:
+
+`
+❯ ./bench_index.mjs
+from('users', { where: 'users.city === "Wakanda"'}).length
+took 145 ms
+normal select: 524288
+
+getFromIds(users,getFromIndex('users', 'city', 'Wakanda')).length
+took 20 ms
+indexed select: 524288
+`
+
+The AVL indexed version can go from anywhere around 5 to 10 times faster, obviously.
+
+
 ### ANTLR4
 
 Just out of fun, I did a very small and very naive implementation of a SQL parser using Antlr4.
