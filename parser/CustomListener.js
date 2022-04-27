@@ -16,6 +16,7 @@ export class CustomListener extends SQLiteParserListener {
 	  values: [],
       table: [],
       conditions: [],
+	  between: null,
 	  range: null,
       groupby: null,
       orderby: null,
@@ -267,6 +268,13 @@ export class CustomListener extends SQLiteParserListener {
 				} else {
 					custom_column.push(terminal)
 				}
+				if (terminal === 'BETWEEN') {
+					this.sqlStruct.between = []
+					this.sqlStruct.conditions.pop()
+				}
+				if (terminal === 'AND' && this.sqlStruct.between) {
+					this.sqlStruct.conditions.pop()
+				}
 				if (terminal === 'IN' || terminal === 'NOT IN') {
 					this.sqlStruct.range = []
 				}
@@ -296,6 +304,15 @@ export class CustomListener extends SQLiteParserListener {
 				if(expr) {
 					if(this.sqlStruct.range) {
 						this.sqlStruct.range.push(expr)
+					} else if(this.sqlStruct.between) {
+						this.sqlStruct.between.push(expr)
+						if(this.sqlStruct.between.length == 2) {
+							this.sqlStruct.conditions.pop()
+							const column = this.sqlStruct.conditions.pop()
+							//this.sqlStruct.conditions.push(`range(${column},${this.sqlStruct.between.join(',')})`)
+							this.sqlStruct.conditions.push(`${column} >= ${this.sqlStruct.between[0]} && ${column} <= ${this.sqlStruct.between[1]}`)
+							this.sqlStruct.between = null
+						}
 					} else {
 						this.sqlStruct.conditions.push(expr)
 					}
