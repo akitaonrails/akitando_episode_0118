@@ -42,6 +42,19 @@ And connect to it with this client:
 
 It will open an interactive prompt so you can send the SQL commands
 
+### AVL Tree based Index
+
+Just to show how an index is built and used (in a normal SQL server,
+it's obviously a B+Tree, but as this is a stupid in-memory hash, a simple
+AVL Tree should suffice).
+
+We can compare the times for the equivalente of a 'table scan' filtering
+every single element in the table or using the index.
+
+`
+node bench_index.mjs
+`
+
 ### ANTLR4
 
 Just out of fun, I did a very small and very naive implementation of a SQL parser using Antlr4.
