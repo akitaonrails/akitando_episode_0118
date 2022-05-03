@@ -29,9 +29,10 @@ for(let i = 0; i < 18; i++) {
         newInsert('users', user)
     })
 }
+console.log(`table size: ${count(users)}`)
 
-let result = timer(`from('users', { where: 'users.city === "Wakanda"'}).length`)
-console.log(`normal select: ${result}\n`)
+let result = timer(`from('users', { where: 'users.city === "Wakanda"'})`)
+console.log(`normal select: ${result.length}\n`)
 
-result = timer(`getFromIds(users,getFromIndex('users', 'city', 'Wakanda')).length`)
-console.log(`indexed select: ${result}\n`)
+result = timer(`getFromIds(users,getFromIndex('users', 'city', 'Wakanda'))`)
+console.log(`indexed select: ${result.length}\n`)
