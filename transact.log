@@ -1,0 +1,1 @@
+insertOrig('users', {"name":"Levi Ackerman","age":37,"city":"Paradis"})

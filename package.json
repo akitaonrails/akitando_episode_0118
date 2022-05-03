@@ -8,6 +8,7 @@
     "dependencies": {
         "antlr4": "^4.10.1",
         "avl": "^1.5.3",
+        "object-sizeof": "^1.6.3",
         "prompt-sync": "^4.2.0"
     },
     "devDependencies": {
