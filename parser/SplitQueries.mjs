@@ -9,7 +9,7 @@ export var SplitQueries = function (input) {
     var tokens = new antlr4.CommonTokenStream(lexer);
     var parser = new SQLiteParser(tokens);
     parser.buildParseTrees = true;
-    var tree = parser.sql_stmt_list(); // the tree upon which I'll walk
+    var tree = parser.parse(); // the tree upon which I'll walk
     var result = [];
     var listener = new CustomListener(result); // custom listener builds on the empty results array
     antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, tree);
