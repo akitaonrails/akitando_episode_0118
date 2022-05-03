@@ -178,10 +178,16 @@ export class CustomListener extends SQLiteParserListener {
 	exitDelete_stmt(ctx) {
 		if(this.sqlStruct && this.sqlStruct.command === 'delete') {
 			var sql = []
-			sql.push(`deleteId('${this.sqlStruct.table}', `);
-			// this is sloppy, but I didn't implement a full DELETE in the stupid database
+			var conditions = null
 			if(this.sqlStruct.conditions && this.sqlStruct.conditions.length > 0) {
-				sql.push(this.sqlStruct.conditions.pop());
+				conditions = this.sqlStruct.conditions.join(' ')
+			}
+			if(isNaN(parseInt(conditions))) {
+				sql.push(`deleteFrom('${this.sqlStruct.table}', `)
+				sql.push(`{ where: "${conditions}" }`)
+			} else {
+				sql.push(`deleteId('${this.sqlStruct.table}', `);
+				sql.push(this.sqlStruct.conditions.pop())
 			}
 			sql.push(`)`);
 			this.result.push(sql.join(''))
