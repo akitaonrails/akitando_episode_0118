@@ -29,6 +29,18 @@ It's a node REPL and you can send SQL commands like this:
 `stupid sql > select name from users where users.city = 'Gotham'`
 
 
+### REPL with Transaction Log
+
+This is another experimental version of a persistency layer based on a simple append-only transaction log.
+
+This will decorate the insert, delete and update functions with special transaction-enabled versions.
+
+Transactions will be saved in the 'transact.log' file.
+
+Run: `./replTransact.mjs`
+
+This will replay existing transactions and save new operations to the transaction log.
+
 ### Client/Server
 
 There is also a demonstration of the most minimal bare-bones "SQL-like"
