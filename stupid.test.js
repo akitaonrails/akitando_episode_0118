@@ -40,6 +40,9 @@ describe("select", () => {
         expect(result[1].alterego).toBe(null)
         expect(result.length).toBe(3)
     })
+})
+
+describe("scenario", () => {
     it("should be able to play an entire insert, select, update, delete scenario", () => {
         let user_id = insert('users', { name: 'Katar Hol', age: 35, city: 'Thanagar' })
         let hero_id = insert('heroes', { alterego: 'Hawkman', users_id: user_id })
