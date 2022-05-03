@@ -9,33 +9,35 @@ database['heroes'] = heroes
 describe("select", () => {
     it("should find by name", () => {
         const result = select('name', from('users', { where: `users.name === 'Peter Parker'` }))
-        expect(result[0][0]).toBe('Peter Parker')
+        expect(result[0].name).toBe('Peter Parker')
     })
     it("should find by range (between)", () => {
         const result = select('name', from('users', { where: 'users.age > 30 && users.age < 40'}))
-        expect(result.flat().includes('Peter Parker')).toBe(false)
+        const names = result.map(user => user.name)
+        expect(names.includes('Peter Parker')).toBe(false)
         expect(result.length).toBe(16)
     })
     it("should accept OR conditions", () => {
         const result = select('name', from('users', { where: 'users.city === "Gotham" || users.city === "Metropolis"'}))
-        expect(result.flat().includes('Bruce Wayne')).toBe(true)
-        expect(result.flat().includes('Clark Kent')).toBe(true)
-        expect(result.flat().includes('Peter Parker')).toBe(false)
+        const names = result.map(user => user.name)
+        expect(names.includes('Bruce Wayne')).toBe(true)
+        expect(names.includes('Clark Kent')).toBe(true)
+        expect(names.includes('Peter Parker')).toBe(false)
         expect(result.length).toBe(7)
     })
     it("should group and organize set by the column", () => {
         const result = select('name,age', groupBy('city', from('users'))['Coast City'])
-        expect(result[0][0]).toBe('Hal Jordan')
+        expect(result[0].name).toBe('Hal Jordan')
     })
     it("should inner join with another table", () => {
         const result = select('name,alterego', innerJoin(from('users', { where: 'users.city === "Gotham"' }), from('heroes')))
-        expect(result[0][1]).toBe('Batman')
+        expect(result[0].alterego).toBe('Batman')
         expect(result.length).toBe(2)
     })
     it("should outer join with another table", () => {
         const result = select('name,alterego', outerJoin(from('users', { where: 'users.city === "Gotham"' }), from('heroes')))
-        expect(result[1][0]).toBe('James Gordon')
-        expect(result[1][1]).toBe(null)
+        expect(result[1].name).toBe('James Gordon')
+        expect(result[1].alterego).toBe(null)
         expect(result.length).toBe(3)
     })
     it("should be able to play an entire insert, select, update, delete scenario", () => {
@@ -45,12 +47,12 @@ describe("select", () => {
         let total_heroes = select('count', from('heroes'))
         
         let result = select('name,alterego', innerJoin(from('users', { where: 'users.city === "Thanagar"' }), from('heroes')))
-        expect(result[0][0]).toBe('Katar Hol')
-        expect(result[0][1]).toBe('Hawkman')
+        expect(result[0].name).toBe('Katar Hol')
+        expect(result[0].alterego).toBe('Hawkman')
         
         updateFrom('users', { age: 37 }, { where: 'users.city === "Thanagar"' } )
         result = select('name,age', from('users', { where: `users.id === ${user_id}` }))
-        expect(result[0][1]).toBe(37)
+        expect(result[0].age).toBe(37)
         
         deleteId('users', user_id)
         deleteId('heroes', hero_id)
