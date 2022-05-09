@@ -1,2 +1,0 @@
-insertOrig('users', {"name":"Levi Ackerman","age":38,"city":"Paradis"})
-updateFromOrig('users', {"age":37}, {"where":"users.city === 'Paradis'"})
