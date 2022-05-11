@@ -19,11 +19,15 @@ const updateFrom = decorateUpdateFromTransaction(fd, updateFromOrig)
 
 const parseScriptWithSplitQueries = (script) => {
   const result = SplitQueries(script);
-  result.forEach(query => {
-    console.log(`running: ${query}`);
-    const result = eval(query);
-    console.table(result);
-  })
+  try {
+    result.forEach(query => {
+      console.log(`running: ${query}`);
+      const result = eval(query);
+      console.table(result);
+    })
+  } catch(err) {
+    console.error(err.message);
+  }
   const query = prompt('stupid query > ')
   parseScriptWithSplitQueries(query)
 }

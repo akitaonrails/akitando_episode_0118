@@ -36,9 +36,15 @@ server.on('connection', function(socket) {
         const parsed = parseScriptWithSplitQueries(script);
         parsed.forEach(query => {
             console.log(`running: ${query}`);
-            const result = JSON.stringify(eval(query));
-            console.log(`result: ${result}`);
-            socket.write(result);
+            try {
+                const result = JSON.stringify(eval(query));
+                console.log(`result: ${result}`);
+                socket.write(result);
+            } catch(e) {
+                console.log(`Error: ${e}`);
+                socket.write(`Error: ${e.message}`);
+            }
+            
         })
     });
 
